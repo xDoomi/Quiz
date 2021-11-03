@@ -13,6 +13,10 @@ public class Question {
         this.answers = answers;
     }
 
+    public ArrayList<Answer> getAnwers(){
+        return answers;
+    }
+
     public String getTextQuestion(){
         return textQuestion;
     }

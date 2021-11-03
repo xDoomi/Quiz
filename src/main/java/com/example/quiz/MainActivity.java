@@ -12,10 +12,14 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
     FragmentQuiz frag2;
     FragmentTransaction fTrans;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //QuestionGenerator generator = new QuestionGenerator();
+        //generator.basicReadWrite();
 
         frag1 = new FragmentStart();
         fTrans = getSupportFragmentManager().beginTransaction();

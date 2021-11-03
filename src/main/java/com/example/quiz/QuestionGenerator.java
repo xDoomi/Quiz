@@ -1,5 +1,8 @@
 package com.example.quiz;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class QuestionGenerator {
@@ -45,5 +48,16 @@ public class QuestionGenerator {
         Question temp = Questions.get(index);
         Questions.remove(index);
         return temp;
+    }
+
+    public void basicReadWrite(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        int size = getSizeGenerator();
+        for(int i=0; i<size; i++){
+            Question question = Questions.get(i);
+            myRef.child("Questions").child(String.valueOf(i)).setValue(question);
+        }
     }
 }
