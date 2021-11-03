@@ -37,5 +37,10 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
             fTrans.replace(R.id.frgmCont, frag2);
             fTrans.commit();
         }
+        else if(s == "Dialog"){
+            fTrans = getSupportFragmentManager().beginTransaction();
+            DialogName dialogname = new DialogName();
+            dialogname.show(fTrans, "DialogName");
+        }
     }
 }

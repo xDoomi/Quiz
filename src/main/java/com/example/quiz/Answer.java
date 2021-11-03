@@ -9,11 +9,11 @@ public class Answer {
         this.Right = Right;
     };
 
-    public String getAnswer(){
+    public String getTextAns(){
         return textAns;
     };
 
-    public boolean getRightAnswer(){
+    public boolean getRightAns(){
         return Right;
     };
 }

@@ -13,25 +13,28 @@ public class QuestionGenerator {
         OneAnswers.add(new Answer("2 answer", false));
         OneAnswers.add(new Answer("3 answer", false));
         OneAnswers.add(new Answer("4 answer", false));
-        Questions.add(new Question("1 question", OneAnswers));
+        Questions.add(new Question("1 question", 0, OneAnswers));
 
         ArrayList<Answer> TwoAnswers = new ArrayList<Answer>();
         TwoAnswers.add(new Answer("1 answer", false));
         TwoAnswers.add(new Answer("2 answer", true));
         TwoAnswers.add(new Answer("3 answer", false));
         TwoAnswers.add(new Answer("4 answer", false));
-        Questions.add(new Question("2 question", TwoAnswers));
+        Questions.add(new Question("2 question", 0, TwoAnswers));
 
         ArrayList<Answer> ThreeAnswers = new ArrayList<Answer>();
         ThreeAnswers.add(new Answer("1 answer", false));
         ThreeAnswers.add(new Answer("2 answer", false));
         ThreeAnswers.add(new Answer("3 answer", true));
         ThreeAnswers.add(new Answer("4 answer", false));
-        Questions.add(new Question("3 question", ThreeAnswers));
-    }
+        Questions.add(new Question("3 question", 0, ThreeAnswers));
 
-    public ArrayList<Question> getQuestions(){
-        return Questions;
+        ArrayList<Answer> FourAnswers = new ArrayList<Answer>();
+        FourAnswers.add(new Answer("1 answer", false));
+        FourAnswers.add(new Answer("2 answer", false));
+        FourAnswers.add(new Answer("3 answer", false));
+        FourAnswers.add(new Answer("4 answer", true));
+        Questions.add(new Question("4 question", R.drawable.car, FourAnswers));
     }
 
     public int getSizeGenerator(){

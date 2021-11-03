@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -45,8 +46,10 @@ public class FragmentQuiz extends Fragment {
 
         TextView textView = (TextView) v.findViewById(R.id.textQuestion);
         TextView scoreView = (TextView) v.findViewById(R.id.textScore);
+        scoreView.setText(String.format("Score: %d", score));
+        ImageView imageView = (ImageView) v.findViewById(R.id.imageQuestion);
 
-        final Question[] question = {setQuestion(v, textView, scoreView, score)};
+        final Question[] question = {setQuestion(v, textView, imageView)};
         for (int i = 0; i< buttons.length; ++i){
             int finalI = i;
             buttons[i].setOnClickListener(new OnClickListener() {
@@ -58,6 +61,7 @@ public class FragmentQuiz extends Fragment {
                     if(tempBtn == rightBtn){
                         tempBtn.setBackgroundColor(Color.parseColor("Green"));
                         score++;
+                        scoreView.setText(String.format("Score: %d", score));
                     }
                     else{
                         rightBtn.setBackgroundColor(Color.parseColor("Green"));
@@ -67,7 +71,7 @@ public class FragmentQuiz extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                someEventListener.someEvent("Start");
+                                someEventListener.someEvent("Dialog");
                             }
                         }, 700);
                     }
@@ -75,7 +79,7 @@ public class FragmentQuiz extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                question[0] = setQuestion(v, textView, scoreView, score);
+                                question[0] = setQuestion(v, textView, imageView);
                                 tempBtn.setBackgroundColor(Color.parseColor("Blue"));
                                 rightBtn.setBackgroundColor(Color.parseColor("Blue"));
                             }
@@ -87,27 +91,33 @@ public class FragmentQuiz extends Fragment {
         return v;
     }
 
-    public Question setQuestion(View v, TextView textView, TextView scoreView, int score) {
+    public Question setQuestion(View v, TextView textView, ImageView imageView) {
         int index = randInd.nextInt(generator.getSizeGenerator());
         Question question = generator.getQuestion(index);
 
         for (int i = 0; i < btnsId.length; ++i) {
             buttons[i] = (Button) v.findViewById(btnsId[i]);
-            buttons[i].setText(question.getAnswer(i));
+            buttons[i].setText(question.getTextAns(i));
             buttons[i].setBackgroundColor(Color.parseColor("Blue"));
         }
 
-        String key = question.getQuestion();
-        textView.setText(key);
+        String textQuestion = question.getTextQuestion();
+        textView.setText(textQuestion);
 
-        scoreView.setText(String.format("Score: %d", score));
+        int imageQuestion = question.getImageQuestion();
+        if(imageQuestion != 0){
+            imageView.setImageResource(imageQuestion);
+        }
+        else{
+            imageView.setImageResource(0);
+        }
         return question;
     }
 
     public Button getButtonRight(Question question){
         Button rightBtn = null;
         for(int i = 0; i < btnsId.length; ++i){
-            if(question.getRightAnswer(i) == true){
+            if(question.getRightAns(i) == true){
                 rightBtn = buttons[i];
             }
         }
