@@ -32,7 +32,6 @@ public class FragmentLeader extends Fragment {
         recyclerLeader.setLayoutManager(new LinearLayoutManager(v.getContext()));
         leaderAdapter = new LeaderAdapter();
         recyclerLeader.setAdapter(leaderAdapter);
-
     }
 
     private void loadLeader(){
