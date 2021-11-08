@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
 
     FragmentStart frag1;
     FragmentQuiz frag2;
+    FragmentLeader frag3;
     FragmentTransaction fTrans;
 
 
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
             fTrans = getSupportFragmentManager().beginTransaction();
             DialogName dialogname = new DialogName();
             dialogname.show(fTrans, "DialogName");
+        }
+        else if(s == "Leader"){
+            frag3 = new FragmentLeader();
+            fTrans = getSupportFragmentManager().beginTransaction();
+            fTrans.replace(R.id.frgmCont, frag3);
+            fTrans.commit();
         }
     }
 }

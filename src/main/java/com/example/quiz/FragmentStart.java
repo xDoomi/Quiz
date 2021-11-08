@@ -49,6 +49,13 @@ public class FragmentStart extends Fragment {
                 someEventListener.someEvent("Quiz");
             }
         });
+        Button btnLeader = (Button) v.findViewById(R.id.btnLeader);
+        btnLeader.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                someEventListener.someEvent("Leader");
+            }
+        });
         return v;
     }
 }
