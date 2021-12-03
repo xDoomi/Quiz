@@ -7,29 +7,53 @@ public class Question {
     private int imageQuestion;
     private ArrayList<Answer> answers;
 
+    Question() {
+    }
+
     Question(String textQuestion, int imageQuestion, ArrayList<Answer> answers) {
         this.textQuestion = textQuestion;
         this.imageQuestion = imageQuestion;
         this.answers = answers;
     }
 
-    public ArrayList<Answer> getAnwers(){
-        return answers;
+    public ArrayList<Answer> getAnswers(){
+        return this.answers;
     }
 
     public String getTextQuestion(){
-        return textQuestion;
+        return this.textQuestion;
     }
 
     public int getImageQuestion(){
-        return imageQuestion;
+        return this.imageQuestion;
     }
 
     public String getTextAns(int index){
-        return answers.get(index).getTextAns();
+        return this.answers.get(index).getTextAns();
     }
 
     public boolean getRightAns(int index) {
-        return answers.get(index).getRightAns();
+        return this.answers.get(index).getRightAns();
+    }
+
+    public void setImageQuestion(int imageQuestion) {
+        this.imageQuestion = imageQuestion;
+    }
+
+    public void setAnswers(ArrayList<Answer> answers) {
+        this.answers = answers;
+    }
+
+    public void setTextQuestion(String textQuestion) {
+        this.textQuestion = textQuestion;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "textQuestion='" + textQuestion + '\'' +
+                ", imageQuestion=" + imageQuestion +
+                ", answers=" + answers +
+                '}';
     }
 }

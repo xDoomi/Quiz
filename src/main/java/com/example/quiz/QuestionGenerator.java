@@ -40,6 +40,10 @@ public class QuestionGenerator {
         Questions.add(new Question("4 question", R.drawable.car, FourAnswers));
     }
 
+    QuestionGenerator(ArrayList questions){
+        this.Questions = questions;
+    }
+
     public int getSizeGenerator(){
         return Questions.size();
     }
@@ -57,7 +61,8 @@ public class QuestionGenerator {
         int size = getSizeGenerator();
         for(int i=0; i<size; i++){
             Question question = Questions.get(i);
-            myRef.child("Questions").child(String.valueOf(i)).setValue(question);
+           // myRef.child(Question.class.getSimpleName()).child(String.valueOf(i)).setValue(question);
         }
+        myRef.child("Question").setValue(Questions);
     }
 }

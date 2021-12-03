@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.Fragment;
 
 import java.util.Random;
@@ -20,10 +21,13 @@ public class FragmentQuiz extends Fragment {
     private int btnsId[] = {R.id.btnAnswer1, R.id.btnAnswer2, R.id.btnAnswer3, R.id.btnAnswer4};
     private Button[] buttons = new Button[btnsId.length];
     private Random randInd = new Random();
-    private QuestionGenerator generator = new QuestionGenerator();
+    private QuestionGenerator generator;
     private int score = 0;
     onSomeEventListener someEventListener;
 
+    FragmentQuiz(QuestionGenerator questionGenerator){
+        this.generator = questionGenerator;
+    }
 
     @Override
     public void onAttach(Context activity) {
@@ -71,7 +75,10 @@ public class FragmentQuiz extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                someEventListener.someEvent("Dialog");
+                                DialogName dialogname = new DialogName();
+                                dialogname.setScore(score);
+                                dialogname.show(getActivity().getSupportFragmentManager(), "DialogName");;
+                                //someEventListener.someEvent("Dialog");
                             }
                         }, 700);
                     }

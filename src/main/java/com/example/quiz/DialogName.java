@@ -10,9 +10,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.content.DialogInterface;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class DialogName extends DialogFragment {
 
     onSomeEventListener someEventListener;
+    String title = "Добавить результат в таблицу";
+    String message = "Введите ваш ник";
+    String button1String = "Добавить результат";
+    String button2String = "Начать сначала";
+
+    int score;
+
+    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("User");
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
 
     @Override
     public void onAttach(Context activity) {
@@ -31,10 +47,6 @@ public class DialogName extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String title = "Добавить результат в таблицу";
-        String message = "Введите ваш ник";
-        String button1String = "Добавить результат";
-        String button2String = "Начать сначала";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
@@ -45,6 +57,8 @@ public class DialogName extends DialogFragment {
 
         builder.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                User user = new User(edittext.getText().toString(), score);
+                myRef.push().setValue(user);
                 someEventListener.someEvent("Start");
             }
         });

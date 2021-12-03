@@ -2,18 +2,29 @@ package com.example.quiz;
 
 public class Answer {
     private String textAns;
-    private boolean Right;
+    private boolean rightAns;
 
-    Answer(String textAns, boolean Right){
+    public Answer() {
+    }
+
+    Answer(String textAns, boolean rightAns){
         this.textAns = textAns;
-        this.Right = Right;
+        this.rightAns = rightAns;
     };
 
     public String getTextAns(){
-        return textAns;
+        return this.textAns;
     };
 
     public boolean getRightAns(){
-        return Right;
+        return this.rightAns;
     };
+
+    public void setRight(boolean right) {
+        this.rightAns = right;
+    }
+
+    public void setTextAns(String textAns) {
+        this.textAns = textAns;
+    }
 }

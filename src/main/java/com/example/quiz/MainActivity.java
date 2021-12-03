@@ -3,16 +3,19 @@ package com.example.quiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.view.View;
 
 import android.util.Log;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements onSomeEventListener{
 
@@ -20,30 +23,37 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
     FragmentQuiz frag2;
     FragmentLeader frag3;
     FragmentTransaction fTrans;
+    QuestionGenerator questionGenerator;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+        //DatabaseReference questionRef = myRef.child(Question.class.getSimpleName());
+        DatabaseReference questionRef = myRef.child("Question");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-
-        myRef.child("Questions").child("1").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        ArrayList<Question> questions = new ArrayList<>();
+        Query query = questionRef.orderByChild("textQuestion");
+        query.addValueEventListener(new ValueEventListener() {
+            //  questionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(!task.isSuccessful()){
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot questionSnapshot : dataSnapshot.getChildren()) {
+                    Question question = questionSnapshot.getValue(Question.class);
+                    questions.add(question);
+                    System.out.println(question.getAnswers());
                 }
             }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("loadQuestion:onCancelled, error: " + error.toException());
+            }
         });
-        
-        //QuestionGenerator generator = new QuestionGenerator();
-        //generator.basicReadWrite();
+        questionGenerator = new QuestionGenerator(questions);
+//        QuestionGenerator generator = new QuestionGenerator();
+//        generator.basicReadWrite();
 
         frag1 = new FragmentStart();
         fTrans = getSupportFragmentManager().beginTransaction();
@@ -60,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements onSomeEventListen
             fTrans.commit();
         }
         else if(s == "Quiz"){
-            frag2 = new FragmentQuiz();
+
+            frag2 = new FragmentQuiz(questionGenerator);
             fTrans = getSupportFragmentManager().beginTransaction();
             fTrans.replace(R.id.frgmCont, frag2);
             fTrans.commit();
