@@ -13,6 +13,7 @@ import android.widget.Button;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 public class FragmentStart extends Fragment {
@@ -41,6 +42,10 @@ public class FragmentStart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragmentstart, null);
+
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
 
         Button btnStart = (Button) v.findViewById(R.id.btnStart);
         btnStart.setOnClickListener(new OnClickListener() {
